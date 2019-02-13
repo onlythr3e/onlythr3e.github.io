@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      Decision Theory Basics
-subtitle:   决策论基础 Decision Theory Basics #1
+subtitle:   Part 1. Settings and priniciples
 date:       2019-02-12
 author:     onlythr3e
 header-img: img/post-bg-coffee.jpg
@@ -28,11 +28,11 @@ tags:
     - Reference: [link_url][number]
     - 
 -->
-# 前言
+## 前言
 
 Decisoion Theory和Statistical Inference还不太一样，有些概念很容易混淆，尤其是不同流派之间基于不同的出发点推导的loss，risk和对应的action之间的关系经常忘记，最近看*Statistical Decision Theory and Bayesian Analysist* 一书发现里面介绍得挺详细的，所以写下这篇文章聊作备忘。
 
-# 不确定性
+## 不确定性
 
 Decision Theory的本意是用来解决以下的问题:
 
@@ -61,7 +61,7 @@ Decision Theory的本意是用来解决以下的问题:
 
 基于以上的设定，我们可以将decision theory的核心总结为这样的一个问题，在不确定性存在的情况下，如何通过决策者的偏好、先验知识、以及采样等方式实现Loss的最小化。
   
-# Loss最小化的原则
+## Loss最小化的原则
 
 在对Loss进行最小化的过程中，过去的研究者们总结出了不同的准则。这些不同的准则来自于对问题不同的理解，其核心区别主要在于以下几点：
 
@@ -72,11 +72,11 @@ Decision Theory的本意是用来解决以下的问题:
 * Loss应该对什么平均？这个问题乍看之下有点莫名其妙，但其实颇有几分哲学意味。举一个简单的例子，我们是否相信$$\theta$$是一个一成不变的值？这其实关乎到Frequentist和Bayesian的本源之争。
 
 对于以上问题持不同的态度，会自然而然地得到最小化loss的不同原则，以下将经典的三个原则简要介绍如下：
-#### Conditional Bayesian Principle 条件贝叶斯原则
+### Conditional Bayesian Principle 条件贝叶斯原则
 
 Conditional Bayesian的核心假设是以下几点：
 
-* $$\theta$$ 本身也是一个随机变量，可以用分布刻画。在没有观察数据时，人们可以用先验分布$$\pi(\theta)$$描述$$\theta$$，在存在观测数据时，我们可以用后验条件分布$$\pi^*(\theta | X)$$来描述$$\theta$$。
+* $$\theta$$ 本身也是一个随机变量，可以用分布刻画。在没有观察数据时，人们可以用先验分布$$\pi(\theta)$$描述$$\theta$$，在存在观测数据时，我们可以用后验条件分布$$\pi^*(\theta \mid X)$$来描述$$\theta$$。
 * 行为不影响参数。（影响的话也可以继续用Conditional Bayes，只是需要作调整）
 * 行为不受观察数据影响，数据是用来更新先验的。
 * 关心loss在后验分布上的表现，最优行为直接通过优化后验分布下的loss求解。换言之，我们认为问题的不确定性来自于$$\theta$$本身，因而对$$\theta$$求期望。
@@ -95,7 +95,7 @@ $$
 * 对后验分布求期望：这本质上是loss对$\theta$的一个加权平均，希望我们选取的loss在$$\theta$$的后验分布的加权下平均最小。
 * 没有考虑对$$x$$求期望：对$$x$$求期望反映了我们希望在考虑样本的随机性情况下作出决策，这里我们直接使用$$x$$更新了先验，目的是为了优化问题可以有一个简单的最优解。在后文对其他准则的讨论中我们还会提到这一点。
 
-#### Frequentist Principle 频率学派准则
+### Frequentist Principle 频率学派准则
 
 频率学派原则的核心假设是以下几点：
 
@@ -105,6 +105,12 @@ $$
 
 为此，Frequentist Principle关心的是**Risk over Repetitive Experiments**:
 \$$
-	R(\theta, \delta) = \mathbb{E}_{x \sim P(X|\theta)}[L(\theta, \delta(x))] = \int_{x} L(\theta, \delta(x))f(x|\theta)dx
+	R(\theta, \delta) = \mathbb{E}_{x \sim P(X|\theta)}[L(\theta, \delta(x))] = \int L(\theta, \delta(x))f(x|\theta)dx
 $$
+
+问题在于，尽管$$\theta$$是一个确定的值，但却是不可知的，因此上式无法求最优解。为此，在Frequentist Principle的大背景下，我们也有不同的对risk的处理方法，从而形成了如下的不同的子原则。
+
+#### 1. Minimax
+#### 2. Bayes
+
 

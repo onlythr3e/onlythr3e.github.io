@@ -1,9 +1,9 @@
 # Site settings
-title: A secrete place
-SEOTitle: 谏知村 | A secret place
+title: 谏知
+SEOTitle: 谏知 | Jianzhi
 header-img: img/post-bg-desk.jpg
 email: onlythr3e@gmail.com
-description: "Welcome to Jianzhi Village."
+description: "Welcome to 谏知"
 keyword: "onlythr3e, 谏知村"
 url: "http://onlythr3e.github.io"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
