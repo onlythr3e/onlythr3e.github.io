@@ -98,8 +98,8 @@ $$
 
 可以看到，Conditional Bayes的核心就在于将观察到的数据作为条件。问题在于，我们应该如何利用观察数据进行条件分析。以下是常见的基于观察数据的分析方法，其中最有名的当然就是Maximum Likelihood Estimation和Maximum A Posterior了，之后有机会我们再对这些方法展开详细的讨论。
 
-* Likelihood methods：直接使用模型来表示一个条件分布，其目的是使得该分布的likilihood $$P(X|\theta)$$最大。Likilihood包含了**样本数据**（而非全部数据）的一切与参数有关的信息。
-* Bayesian methods：利用Bayes ruls将posterior变为prior * likilihood，即$$P(\theta|X) \propto P(X|\theta)P(\theta)$$。
+* Likelihood methods：直接使用模型来表示一个条件分布，其目的是使得该分布的likilihood $$P(X \mid \theta)$$最大。Likilihood包含了**样本数据**（而非全部数据）的一切与参数有关的信息。
+* Bayesian methods：利用Bayes ruls将posterior变为prior * likilihood，即$$P(\theta \mid X) \propto P(X \mid \theta)P(\theta)$$。
 * Structural inference：略
 * Pivital inference：略
 
