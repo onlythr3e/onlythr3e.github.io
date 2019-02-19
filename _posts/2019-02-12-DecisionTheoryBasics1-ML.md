@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Decision Theory Basics
+title:      Decision Theory Basics I
 subtitle:   Part 1. Settings and priniciples
 date:       2019-02-12
 author:     onlythr3e
@@ -84,7 +84,7 @@ Conditional Bayesian的核心假设是以下几点：
 
 基于以上的假设，条件贝叶斯原则旨在优化下面的**Bayesian Expected Loss**:
 \$$
-	\rho(\pi^\*, a) = \mathbb{E}_{\pi^\*} [L(\theta, a)]
+	\rho(\pi^\ast, a) = \mathbb{E}_{\pi^\ast} [L(\theta, a)]
 $$
 
 其中$$\pi^*$$是后验分布。这也是为什么将这条准则叫做条件贝叶斯的原因。假定后验概率已知，则最优决策为：
@@ -99,7 +99,7 @@ $$
 可以看到，Conditional Bayes的核心就在于将观察到的数据作为条件。问题在于，我们应该如何利用观察数据进行条件分析。以下是常见的基于观察数据的分析方法，其中最有名的当然就是Maximum Likelihood Estimation和Maximum A Posterior了，之后有机会我们再对这些方法展开详细的讨论。
 
 * Likelihood methods：直接使用模型来表示一个条件分布，其目的是使得该分布的likilihood $$P(X \mid \theta)$$最大。Likilihood包含了**样本数据**（而非全部数据）的一切与参数有关的信息。
-* Bayesian methods：利用Bayes ruls将posterior变为prior * likilihood，即$$P(\theta \mid X) \propto P(X \mid \theta)P(\theta)$$。
+* Bayesian methods：利用Bayes rules将posterior变为prior * likilihood，即$$P(\theta \mid X) \propto P(X \mid \theta)P(\theta)$$。
 * Structural inference：略
 * Pivital inference：略
 
@@ -165,6 +165,8 @@ Invariance原则暂略。
 | 如何看待参数？ | 参数服从某种分布，因此参数是可变的。 | 参数固定但不可知，因此参数是不可变的。 |
 | 关心的risk？| $$\rho(\pi^*, a) = \mathbb{E}_{\pi^*} [L(\theta, a)]$$ | $$R(\theta, \delta) = \mathbb{E}_{x \sim P(X \mid \theta)}[L(\theta, \delta(x))] = \int L(\theta, \delta(x))f(x \mid \theta)dx$$ |
 | 选取最优行动的方法 | 最小化Conditional Bayesian Expected Loss | 依据不同的准则选择Minimax或Bayes |
+
+然而我们很快就会看到，二者表面上看似出发点和解决问题的方式大相径庭，但其内核却有着异曲同工之妙，这也是回顾Statistics历史时有趣的一点吧。
 
 ## Reference
 1. James O.Berger, *Statistical Decision Theory and Bayesian Analysis*, 1980.
