@@ -148,7 +148,57 @@ $$
 $$
 此时由于可变的只有$$\delta(x)$$，当选择Bayes estimator $$\delta_{\pi}(x)$$最小化$$\rho$$的时候，$$r$$也取到最小值，二者等价。两个流派从不同的出发点做出的最优选择，在Bayes rule下其实是统一的。
 
+## 实际计算
+实际计算Bayes Estimator时有两种方法，一是直接代入原定义，将loss，likelihood和prior代入求解期望，并最小化Bayes risk，二是如果后验是一个很好求的分布的话，可以直接写出对后验和loss积分的形式，求解期望并最小化Bayes risk。通常我们会选择后者，且针对常见的两种loss后者有非常简洁的解，即：
+
+* Square loss: $$L(\theta, a) = (\theta - a)^2$$，Bayes统计量即后验的mean。
+* Absolute loss： $$L(\theta, a) = \mid \theta - a \mid$$，Bayes统计量即后验的median。
+* Zero-one loss: $$L(\theta, a) = \mathbf{1}\{ \theta \neq a \}$$，Bayes统计量即后验的mode。
+
+其他的loss也可以相应地求期望进行计算，计算时注意将期望中的项凑成一个分布的形式并使得积分为1，而不要暴力地去求积分（算力惊人可以忽略这句话）。总的来说，求解Bayes统计量在计算上是可行的。
+
 # Minimax Method
+## 对抗视角
+我们可以将Minimax的思想看做是统计学家与上帝的一场游戏，游戏的规则是统计学家要选择一个行为使得loss最小，而上帝要做的是改变自然参数$$\theta$$使得loss尽可能地大。显而易见的是先做出决策的一方有优势，为此我们可以针对双方谁先行分别找到游戏的最优解如下：
+\$$
+\begin{align*}
+    \overline{V} &= \inf_{a \in \mathcal{A}} \sup_{\theta \in \Theta}R(\theta, a) && \text{上帝先选}\theta\\
+    \underline{V} &= \sup_{\theta \in \Theta}  \inf_{a \in \mathcal{A}} R(\theta, a) && \text{统计学家先选}a\\
+    \overline{V} &\geq \underline{V} && \text{上帝先选时有优势，因为目的是最大化loss}
+\end{align*}
+$$
+
+当然了Bayesian们会说怎么能认为$$\theta$$就是一个固定的值呢，它也可能是一个分布嘛。我们可以将上帝一方的行动扩展为$$\sup_{\pi \in \Pi} R(\pi, a)$$。对应地我们也可以将统计学家的行为扩展为选择一个deterministic或者是random的行动规则，只要将$$a$$换成$$\delta$$即可，这些都不影响下面的讨论。根据这样的设定，我们会相应得到Minimax和maximum的定义如下：
+
+如果对任意$$\theta \in \Theta$$和任意$$a \in \mathcal{A}$$都有
+\$$
+R(\theta, \delta_0) \leq R(\pi_0, a)
+$$
+那么$$\delta_0$$是Minimax（即统计学家后手的选择），$$\pi_0$$是Maximum（上帝先手的选择）。这会给我们计算Minimax提供帮助。
+
+## Minimax Rule
+从上面我们可以更清楚地了解到Minimax是一种保守主义的哲学，上帝总是先行并且总会找到最不利于统计学家的参数。为了做出应对，我们必须考虑最坏情况下的loss，但这在实际中往往是不可行的，因为$$\theta$$的真实取值和分布是未知的。这就要求我们必须用其他的方法来辅助求解Minimax decision。一个常见的方法是利用Bayes的equalizer rule：
+
+**Equalizer Rule**： 如果$$\delta_{0}$$是基于先验$$\pi$$的Bayes decision，且$$\pi$$是对于$$\delta_0$$而言的最不利先验(Least favorable prior)，即$$R(\delta_0, \theta) \leq R(\delta_0, \pi)$$，那么$$\delta_0$$也是Minimax。
+
+> 证明： 如果$$\delta_0$$不是Minimax，则另有Minimax $$\delta_{M}$$满足$$\sup_{\theta}R(\delta_M, \theta) < \sup_{\theta}R(\delta_0, \theta)$$，我们可以构造反例如下
+\$$
+    r(\pi, \delta_M) \leq \sup_{\theta} R(\delta_M, \theta) \leq \sup_{\theta}R(\delta_0, \theta) \leq r(\pi, \delta_0)
+$$
+第一个不等式来自于平均loss必定小于或等于最大loss，第二个不等式来自于$$\delta_M$$才是Minimax的假设，第三个不等式来自于$$\pi$$是最不利先验。由此可见存在$$\delta_M$$使得其Bayes risk比$$\delta_0$$更小，违背了$$\delta_0$$是Bayes decision的假定。因此，$$\delta_0$$必定是Minimax。
+
+上面的证明中有一个有趣的点，我们左边用了risk对某个分布的期望应该小于等于其最大值的结论，然而右边的最不利先验却显示risk的最大值也小于最不利先验下的Bayes risk。由此我们可以引出一个更清晰的表述：
+
+如果Bayes risk取到了$$\delta_0$$下的maximum risk，即
+\$$
+    r(\pi, \delta_0) = \sup_{\theta}R(\delta_0, \theta)
+$$
+那么：
+
+* $$\pi$$是最不利先验。
+* $$\delta_0$$是Minimax。
+* $$\delta_0$$是唯一的Bayes的话，那么它也是唯一的Minimax。
+* 如果对于一个Bayes decision $$\delta$$有$$R(\delta_0, \theta)$$是常数，即risk与$$\theta$$无关，那么此时Bayes与Minimax等价。
 
 ## Reference
 1. James O.Berger, *Statistical Decision Theory and Bayesian Analysis*, 1980.
