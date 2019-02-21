@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Decision Theory Basics I
+title:      Machine Learning - Decision Theory Basics I
 subtitle:   Part 1. Settings and priniciples
 date:       2019-02-12
 author:     onlythr3e
