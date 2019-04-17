@@ -28,6 +28,7 @@ tags:
     - Reference: [link_url][number]
     - 
 -->
+
 ## 前言
 
 最近在上Keenan Crane的DDG课程，感觉过去在学CG时涉及到mesh处理很多不明就里的操作都有了理论上的支持，并深深地感受到了微分几何在CG领域的强大作用。离散微分几何（DDG）的这一研究主题的目的就是如何将微分几何中已经解决的问题转变为计算机可以处理的离散问题，并关心这样的转化会带来什么样的差异。
@@ -88,11 +89,11 @@ ______
 最简单的流形就是一维的流形。我们可以将常见的三维曲线定义为从一个一维流形到一个三维实数空间的变换$$\gamma: I \rightarrow \mathbb{R}^3$$。这里的$$I$$表示interval，与曲面的$$M$$表示广义的Manifold对应。类似的，我们关心在原空间中的**切向量**$$X$$在变换后的空间会是什么样。首先我们知道其距离可以表示为：
 
 $$
-|d\gamma(X)| = \sqrt{g(X,X)} = \sqrt{d\gamma(X) \cdot d\gamma(X)}
+\lvert d\gamma(X) \lvert = \sqrt{g(X,X)} = \sqrt{d\gamma(X) \cdot d\gamma(X)}
 $$
 其中$$g(\cdot)$$就是metric。这里$$(\cdot)$$是广义上的内积，与欧氏空间中的向量内积不同（一个简单的例子就是函数的内积即$$f(X) \cdot f(Y) = \int_{M}f(X)f(Y)dM$$）。为了表示区分，我们将会使用$$\langle X, Y \rangle$$表示传统的向量内积。
 
-在三维曲线上最常见的变换是等距变换，它对于任意$$X$$都满足$$|d\gamma(X)| = |X|$$。
+在三维曲线上最常见的变换是等距变换，它对于任意$$X$$都满足$$\lvert d\gamma(X)\lvert = \lvert X\lvert $$。
 
 
 #### Frenet Frame
@@ -100,7 +101,7 @@ $$
 
 * $$T = d\gamma(X)$$是$$\mathbb{R}^3$$中曲线的**单位切向量**。
     * 首先注意$$T$$是在$$\mathbb{R}^3$$上的，与$$I$$无关，也就是这个定义是落在欧氏空间内的。
-    * 其次要注意$$T$$是单位向量，即$$|T| = 1$$。
+    * 其次要注意$$T$$是单位向量，即$$\lvert T\lvert  = 1$$。
 * 接下来考虑单位切向量$$T$$的变化率，这可以表示为$$T = -\kappa N$$。
     * $$\kappa$$被称作曲率（Curvature），可以理解为曲线上密切圆的半径的倒数，即密切圆半径越大，曲线越近似于直线，密切圆半径越小，曲线越近似于点。
     * $$N$$被称作法向量（Principal normal），是垂直于$$T$$的一个单位向量，可以视作quarter turn。
@@ -147,7 +148,7 @@ $$
 
 当然了，这里的流形$$M$$本身也是一个欧氏空间，因此这个对应是很简单也很直接的。我们用这个例子只是为了直观地展示一下微分究竟做了一件什么事情。
 
-![derivative of a real-value function](..\resources\ddg_01\derivative.jpg)
+![derivative of a real-value function](https://ws4.sinaimg.cn/large/006tNc79ly1g20urxbneyj31910dnt9q.jpg)
 
 接下来让我们再看另一个关于方向导数的例子。
 ##### Example 2: Devivative of a real-value function
@@ -157,12 +158,12 @@ $$
 有了曲面微分的定义，我们的第一个问题就是切向量$$dX$$变到$$df(X)$$之后其长度发生了什么变化？通常我们采用如下的方式来表示经过$$f$$变换后的$$X$$的长度：
 
 $$
-|df(X)| = \sqrt{g(X,X)} = \sqrt{df(X) \cdot df(X)}
+\lvert df(X) \rvert = \sqrt{g(X,X)} = \sqrt{df(X) \cdot df(X)}
 $$
 
 这与前面曲线的长度的定义是一致的。有了度量，我们可以刻画一些特殊的变换，如等距变换(isometric)和保角变换(Conformal)：
 
-* 等距变换：要求$$f$$不发生拉伸，即$$|df(X)| = |X|$$。
+* 等距变换：要求$$f$$不发生拉伸，即$$\lvert df(X)\lvert  = \lvert X\lvert $$。
 * 保角变换：要求$$f$$不改变两向量之间的夹角，即$$df(X)\cdot df(Y) = a\langle X, Y\rangle$$，其中$$a(\cdot)$$是一个取值恒为正数的函数。
     * 保角变换允许曲面发生拉伸，但不允许发生剪切。
     * 保角变换总是存在，这一点很重要。
@@ -183,10 +184,10 @@ $$u$$就是$$p$$处的法向量。特别的，我们将单位法向量记作$$N$
 这引出了法向曲率（Normal curvature）的定义，即假定在$$p$$点处存在一个由$$df(X)$$和$$N$$张成的平面$$\pi$$与曲面相交得到一条曲线，那么该曲线的曲率就是这个曲面在该点处的法向曲率，记作：
 
 $$
-\kappa_n(X) = \frac{df(X) \cdot dN(X)}{|df(X)|^2}
+\kappa_n(X) = \frac{df(X) \cdot dN(X)}{\lvert df(X)\lvert ^2}
 $$
 
-这个式子来自于前面提到的Frenet frame性质，即$$dN = \kappa T - \tau B$$，我们可以利用$$T$$去点积$$dN$$来提取其中的曲率部分，即$$T \cdot dN = T \cdot(\kappa T - \tau B) = \kappa |T|^2$$，从而得到上式。
+这个式子来自于前面提到的Frenet frame性质，即$$dN = \kappa T - \tau B$$，我们可以利用$$T$$去点积$$dN$$来提取其中的曲率部分，即$$T \cdot dN = T \cdot(\kappa T - \tau B) = \kappa \lvert T\lvert ^2$$，从而得到上式。
 
 ##### Shape operator
 注意在法向曲率的定义中我们选定了切向量$$X$$，一个随之而来的问题是：选择什么方向$$X_1$$和$$X_2$$会得到最大和最小的法向曲率$$\kappa_1$$和$$\kappa_2$$。为了解决这个问题，我们需要引入一个新的算子——Shape operator，它是一个从切空间到切空间的映射，可表示为：
